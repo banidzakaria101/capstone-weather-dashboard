@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import WeatherCard from "./components/WeatherCard";
 
 function App() {
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchWeather = async () => {
       try {
         const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
-        const city = "London"; // test with any city
+        const city = "London"; 
         const response = await fetch(
           `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`
         );
@@ -16,8 +20,11 @@ function App() {
 
         const data = await response.json();
         console.log("Weather data:", data);
+        setWeatherData(data);
       } catch (error) {
         console.error("Error fetching weather:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -26,7 +33,11 @@ function App() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold">Weather Dashboard</h1>
+      {loading ? (
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      ) : (
+        <WeatherCard weatherData={weatherData} />
+      )}
     </div>
   );
 }
