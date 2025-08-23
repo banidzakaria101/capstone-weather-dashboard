@@ -10,7 +10,7 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [city, setCity] = useState('London');
+  const [city, setCity] = useState('Casablanca');
 
   const fetchData = async (cityName) => {
     setLoading(true);
@@ -50,23 +50,37 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-start min-h-screen bg-[#1c1c1c] text-white p-4">
-      {loading ? (
-        <h1 className="text-xl">Loading...</h1>
-      ) : weatherData?.error ? (
-        <div className="text-white text-xl text-center">
-          City not found. Please try again.
-        </div>
-      ) : (
-        <>
-          <div className="w-full max-w-sm md:w-1/3 p-4">
-            <SearchBar onSearch={handleSearch} />
-            <WeatherCard weatherData={weatherData} />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+      <div className="flex flex-col lg:flex-row justify-center items-start min-h-screen p-6">
+        {loading ? (
+          <div className="flex items-center justify-center min-h-screen w-full">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              <div className="text-xl text-gray-300">Loading weather data...</div>
+            </div>
           </div>
+        ) : weatherData?.error ? (
+          <div className="flex items-center justify-center min-h-screen w-full">
+            <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 text-center max-w-md">
+              <div className="text-6xl mb-4">🌍</div>
+              <div className="text-xl text-red-400 mb-4">City not found</div>
+              <div className="text-gray-300 mb-6">Please check the city name and try again.</div>
+              <div className="w-full max-w-sm">
+                <SearchBar onSearch={handleSearch} />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="w-full max-w-sm lg:w-1/3 p-4">
+              <SearchBar onSearch={handleSearch} />
+              <WeatherCard weatherData={weatherData} />
+            </div>
 
-          <DashboardRightSide weatherData={weatherData} forecastData={forecastData} />
-        </>
-      )}
+            <DashboardRightSide weatherData={weatherData} forecastData={forecastData} />
+          </>
+        )}
+      </div>
     </div>
   );
 }
