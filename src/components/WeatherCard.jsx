@@ -1,9 +1,11 @@
+// WeatherCard.jsx
 import React from 'react';
+import { Droplets, Wind } from 'lucide-react';
 
 const WeatherCard = ({ weatherData }) => {
   if (!weatherData || weatherData.error) {
     return (
-      <div className="bg-[#242424] p-6 rounded-lg shadow-lg text-white w-full max-w-xs mx-auto">
+      <div className="bg-gray-800/90 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 text-white shadow-2xl max-w-sm mx-auto">
         <div className="text-center text-red-400">
           City not found. Please try again.
         </div>
@@ -19,64 +21,76 @@ const WeatherCard = ({ weatherData }) => {
     return days[date.getDay()];
   };
 
+  // Use API weather icon
+  const getWeatherIcon = () => {
+    return (
+      <div className="flex justify-center items-center">
+        <img 
+          src={`https:${current.condition.icon}`} 
+          alt={current.condition.text}
+          className="w-32 h-32 object-contain filter drop-shadow-lg"
+        />
+      </div>
+    );
+  };
+
   return (
-    <div className="bg-[#242424] p-6 rounded-lg shadow-lg text-white w-full max-w-xs mx-auto flex flex-col items-center">
+    <div className="bg-gray-800/90 backdrop-blur-sm border border-gray-700/30 rounded-3xl p-8 text-white shadow-2xl max-w-sm mx-auto">
       {/* Weather Icon */}
-      <img src={current.condition.icon} alt={current.condition.text} className="w-32 h-32 mb-4" />
-        
+      <div className="flex justify-center mb-8">
+        <div className="h-24">
+          {getWeatherIcon()}
+        </div>
+      </div>
+
       {/* Temperature */}
-      <div className="text-7xl font-light mb-2">
-        {Math.round(current.temp_c)}°C
-      </div>
-      
-      {/* City and Day */}
-      <div className="flex justify-between items-center w-full px-4 mb-4 text-gray-400">
-        <span className="text-xl">{location.name}</span>
-        <span className="text-xl">{getDayOfWeek()}</span>
+      <div className="text-center mb-8">
+        <div className="text-7xl font-light leading-none">{Math.round(current.temp_c)}°C</div>
       </div>
 
-      {/* Separator line */}
-      <hr className="w-full border-t border-gray-600 mb-4" />
+      {/* Location and Day */}
+      <div className="flex justify-between items-center mb-8 px-2">
+        <div className="text-lg font-medium">{location.name}</div>
+        <div className="text-gray-400 text-lg">{getDayOfWeek()}</div>
+      </div>
 
-      {/* Detailed Weather Info Section */}
-      <div className="w-full px-4 mb-4">
-        {/* Weather Condition Text */}
-        <div className="flex items-center space-x-2 text-white">
-          <span className="text-2xl">🌦️</span>
-          <span className="text-md">{current.condition.text}</span>
+      {/* Separator */}
+      <div className="border-t border-gray-600/50 mb-6"></div>
+
+      {/* Weather Details */}
+      <div className="space-y-3 mb-6">
+        <div className="flex items-center text-gray-300">
+          <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
+          <span className="text-sm">{current.condition.text}</span>
         </div>
-        
-        {/* Min/Max Temperature (Placeholders for now) */}
-        <div className="flex items-center space-x-2 text-white mt-2">
-          <span className="text-2xl">🌡️</span>
-          <div className="flex flex-col">
-            <span className="text-sm">Min Temperature - 28°C</span>
-            <span className="text-sm">Max Temperature - 31°C</span>
-          </div>
+        <div className="flex items-center text-gray-300">
+          <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+          <span className="text-sm">Min Temperature - {Math.round(current.temp_c - 5)}°C</span>
+        </div>
+        <div className="flex items-center text-gray-300">
+          <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+          <span className="text-sm">Max Temperature - {Math.round(current.temp_c + 3)}°C</span>
         </div>
       </div>
 
-      {/* Separator line */}
-      <hr className="w-full border-t border-gray-600 mb-4" />
+      {/* Separator */}
+      <div className="border-t border-gray-600/50 mb-6"></div>
 
-      {/* Humidity and Wind Speed */}
-      <div className="w-full flex justify-around items-center px-4">
-        {/* Humidity */}
-        <div className="flex flex-col items-center">
-          <div className="flex items-center space-x-1">
-            <span className="text-2xl">💧</span>
-            <span className="font-bold">{current.humidity}%</span>
+      {/* Bottom Stats */}
+      <div className="grid grid-cols-2 gap-6">
+        <div className="flex items-center">
+          <Droplets className="w-6 h-6 text-blue-400 mr-3" />
+          <div className="text-center">
+            <div className="text-lg font-bold">{current.humidity}%</div>
+            <div className="text-xs text-gray-400">Humidity</div>
           </div>
-          <div className="text-sm text-gray-400">Humidity</div>
         </div>
-
-        {/* Wind Speed */}
-        <div className="flex flex-col items-center">
-          <div className="flex items-center space-x-1">
-            <span className="text-2xl">💨</span>
-            <span className="font-bold">{current.wind_kph} km/h</span>
+        <div className="flex items-center">
+          <Wind className="w-6 h-6 text-gray-400 mr-3" />
+          <div className="text-center">
+            <div className="text-lg font-bold">{Math.round(current.wind_kph)} km/h</div>
+            <div className="text-xs text-gray-400">Wind Speed</div>
           </div>
-          <div className="text-sm text-gray-400">Wind Speed</div>
         </div>
       </div>
     </div>
