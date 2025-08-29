@@ -26,9 +26,24 @@ function App() {
     }
   };
 
+  // ✅ Detect user location on first load
   useEffect(() => {
-    fetchData(city);
-  }, [city]);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          await fetchData(`${latitude},${longitude}`);
+        },
+        (error) => {
+          console.warn("Geolocation failed:", error.message);
+          fetchData(city); // fallback
+        }
+      );
+    } else {
+      fetchData(city); // fallback if not supported
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSearch = (newCity) => {
     if (newCity.trim() !== '' && newCity !== city) {
@@ -44,7 +59,11 @@ function App() {
           <WeatherCard weatherData={weatherData} loading={loading} />
         </div>
 
-        <DashboardRightSide weatherData={weatherData} forecastData={forecastData} loading={loading} />
+        <DashboardRightSide 
+          weatherData={weatherData} 
+          forecastData={forecastData} 
+          loading={loading} 
+        />
       </div>
     </div>
   );
