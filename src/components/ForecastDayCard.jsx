@@ -1,7 +1,7 @@
 // ForecastDayCard.jsx
 import React from 'react';
 
-const ForecastDayCard = ({ dayData }) => {
+const ForecastDayCard = ({ dayData, loading }) => {
   if (!dayData) {
     return null;
   }
@@ -33,6 +33,7 @@ const ForecastDayCard = ({ dayData }) => {
       {/* Max Temperature */}
       <div className="text-white font-semibold text-lg mb-1">
         {Math.round(day.maxtemp_c)}°
+        {loading && <p className="text-sm text-gray-400">Updating...</p>}
       </div>
       
       {/* Min Temperature */}
