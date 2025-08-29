@@ -15,7 +15,7 @@ const ForecastDayCard = ({ dayData }) => {
   };
 
   return (
-    <div className="flex flex-col items-center text-white min-w-[80px] px-2">
+    <div className="flex flex-col items-center text-white min-w-[80px] px-2 bg-stone-900 rounded-xl py-4">
       {/* Day of the week */}
       <div className="text-gray-400 text-sm mb-3 font-medium">
         {getDayName(date)}
