@@ -30,7 +30,7 @@ const DashboardRightSide = ({ weatherData, forecastData }) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex space-x-6">
-          <button className="text-gray-400 hover:text-white transition-colors">Today</button>
+          <button className="text-gray-400 hover:text-white transition-colors">Week</button>
         </div>
       </div>
 
