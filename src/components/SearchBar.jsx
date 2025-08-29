@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Clock, X } from "lucide-react";
+import { fetchSuggestions } from "../api/weatherApi"; // import the function
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -7,8 +8,6 @@ const SearchBar = ({ onSearch }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [history, setHistory] = useState([]);
   const wrapperRef = useRef(null);
-
-  const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 
   // Load history
   useEffect(() => {
@@ -34,19 +33,11 @@ const SearchBar = ({ onSearch }) => {
       return;
     }
 
-    const fetchSuggestions = async () => {
-      try {
-        const res = await fetch(
-          `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${searchTerm}`
-        );
-        const data = await res.json();
-        setSuggestions(data || []);
-      } catch (err) {
-        console.error("Error fetching suggestions:", err);
-      }
-    };
+    const debounceTimer = setTimeout(async () => {
+      const data = await fetchSuggestions(searchTerm);
+      setSuggestions(data);
+    }, 300);
 
-    const debounceTimer = setTimeout(fetchSuggestions, 300);
     return () => clearTimeout(debounceTimer);
   }, [searchTerm]);
 
@@ -56,7 +47,6 @@ const SearchBar = ({ onSearch }) => {
     setSuggestions([]);
     setShowSuggestions(false);
 
-    // Save history (max 5, no duplicates)
     const updated = [city, ...history.filter((h) => h !== city)].slice(0, 5);
     setHistory(updated);
     localStorage.setItem("searchHistory", JSON.stringify(updated));
@@ -95,7 +85,6 @@ const SearchBar = ({ onSearch }) => {
 
       {showSuggestions && (suggestions.length > 0 || history.length > 0) && (
         <ul className="absolute z-10 mt-1 w-full bg-stone-900 border border-gray-700/50 rounded-xl max-h-60 overflow-y-auto">
-          {/* History */}
           {searchTerm.length < 2 &&
             history.map((h, i) => (
               <li
@@ -108,7 +97,6 @@ const SearchBar = ({ onSearch }) => {
               </li>
             ))}
 
-          {/* API Suggestions */}
           {searchTerm.length >= 2 &&
             suggestions.map((s) => (
               <li
@@ -120,7 +108,6 @@ const SearchBar = ({ onSearch }) => {
               </li>
             ))}
 
-          {/* Clear history button */}
           {history.length > 0 && searchTerm.length < 2 && (
             <li
               onClick={clearHistory}
