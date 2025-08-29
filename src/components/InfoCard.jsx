@@ -36,33 +36,28 @@ const InfoCard = ({ title, value, label, type }) => {
             </div>
           );
         }
-        
       case 'uv':
         // Dynamic icon based on UV value
         const uvValue = parseInt(value);
         let uvColor = 'from-green-400 to-green-600';
         if (uvValue > 7) uvColor = 'from-red-400 to-red-600';
         else if (uvValue > 3) uvColor = 'from-yellow-400 to-orange-500';
-        
         return (
           <div className={`w-8 h-8 bg-gradient-to-r ${uvColor} rounded-full mr-2 flex items-center justify-center relative`}>
             <Sun className="w-4 h-4 text-white" />
           </div>
         );
-        
       case 'pressure':
         // Dynamic icon based on pressure value
         const pressureValue = parseInt(value);
         let pressureColor = 'from-blue-400 to-blue-600';
         if (pressureValue > 1020) pressureColor = 'from-green-400 to-green-600';
         else if (pressureValue < 1000) pressureColor = 'from-orange-400 to-red-500';
-        
         return (
           <div className={`w-8 h-8 bg-gradient-to-r ${pressureColor} rounded-full mr-2 flex items-center justify-center`}>
             <Eye className="w-4 h-4 text-white" />
           </div>
         );
-        
       default:
         return null;
     }
@@ -75,19 +70,16 @@ const InfoCard = ({ title, value, label, type }) => {
         if (aqiValue <= 2) return 'text-green-400';
         if (aqiValue <= 4) return 'text-yellow-400';
         return 'text-red-400';
-        
       case 'uv':
         const uvValue = parseInt(value);
         if (uvValue <= 2) return 'text-green-400';
         if (uvValue <= 7) return 'text-yellow-400';
         return 'text-red-400';
-        
       case 'pressure':
         const pressureValue = parseInt(value);
         if (pressureValue > 1020) return 'text-green-400';
         if (pressureValue < 1000) return 'text-orange-400';
         return 'text-blue-400';
-        
       default:
         return 'text-gray-400';
     }
@@ -101,7 +93,6 @@ const InfoCard = ({ title, value, label, type }) => {
         if (aqiValue <= 4) return 'Moderate';
         if (aqiValue <= 6) return 'Unhealthy for Sensitive';
         return 'Unhealthy';
-        
       case 'uv':
         const uvValue = parseInt(value);
         if (uvValue <= 2) return 'Low';
@@ -109,25 +100,23 @@ const InfoCard = ({ title, value, label, type }) => {
         if (uvValue <= 7) return 'High';
         if (uvValue <= 10) return 'Very High';
         return 'Extreme';
-        
       case 'pressure':
         const pressureValue = parseInt(value);
         if (pressureValue > 1020) return 'High';
         if (pressureValue < 1000) return 'Low';
         return 'Normal';
-        
       default:
         return label;
     }
-  };9
+  };
 
   return (
-    <div className="bg-[#242424] rounded-2xl p-6 text-white ">
-      <div className="text-gray-400 text-sm mb-2">{title}</div>
-      <div className="text-4xl font-light mb-2">{value}</div>
+    <div className="bg-[#242424] rounded-2xl p-4 sm:p-6 text-white ">
+      <div className="text-gray-400 text-sm md:text-md mb-2">{title}</div>
+      <div className="text-3xl sm:text-4xl font-light mb-2">{value}</div>
       <div className="flex items-center">
         {getIcon()}
-        <span className={`text-sm ${getLabelColor()}`}>{getDynamicLabel()}</span>
+        <span className={`text-xs sm:text-sm ${getLabelColor()}`}>{getDynamicLabel()}</span>
       </div>
     </div>
   );

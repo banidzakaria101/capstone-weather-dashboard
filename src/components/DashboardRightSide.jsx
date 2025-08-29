@@ -36,7 +36,7 @@ const DashboardRightSide = ({ weatherData, forecastData }) => {
 
       {/* 7-Day Forecast */}
       <div className="bg-[#242424] rounded-2xl p-6 mb-8">
-        <div className="grid grid-cols-7 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
           {forecastday.map((day) => (
             <ForecastDayCard key={day.date_epoch} dayData={day} />
           ))}
@@ -44,7 +44,7 @@ const DashboardRightSide = ({ weatherData, forecastData }) => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <InfoCard
           title="Air Quality Index"
           value={current.air_quality['us-epa-index'] || 53}
@@ -67,9 +67,8 @@ const DashboardRightSide = ({ weatherData, forecastData }) => {
         />
       </div>
 
-     
-        <SunriseSunsetCard forecastData={forecastData} />
-      
+      {/* Bottom Section */}
+      <SunriseSunsetCard forecastData={forecastData} />
     </div>
   );
 };
