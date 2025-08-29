@@ -1,4 +1,3 @@
-// WeatherCard.jsx
 import React from 'react';
 import { Droplets, Wind } from 'lucide-react';
 
@@ -21,7 +20,7 @@ const WeatherCard = ({ weatherData }) => {
     return days[date.getDay()];
   };
 
-  // Use API weather icon
+  // API weather icon
   const getWeatherIcon = () => {
     return (
       <div className="flex justify-center items-center">
@@ -35,7 +34,7 @@ const WeatherCard = ({ weatherData }) => {
   };
 
   return (
-    <div className="bg-gray-800/90 backdrop-blur-sm border border-gray-700/30 rounded-3xl p-8 text-white shadow-2xl max-w-sm mx-auto">
+    <div className=" p-8 text-white max-w-sm mx-auto">
       {/* Weather Icon */}
       <div className="flex justify-center mb-8">
         <div className="h-24">
@@ -58,7 +57,7 @@ const WeatherCard = ({ weatherData }) => {
       <div className="border-t border-gray-600/50 mb-6"></div>
 
       {/* Weather Details */}
-      <div className="space-y-3 mb-6">
+      <div className="space-y-3 mb-6 pt-7">
         <div className="flex items-center text-gray-300">
           <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
           <span className="text-sm">{current.condition.text}</span>
@@ -77,7 +76,7 @@ const WeatherCard = ({ weatherData }) => {
       <div className="border-t border-gray-600/50 mb-6"></div>
 
       {/* Bottom Stats */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6 pt-6">
         <div className="flex items-center">
           <Droplets className="w-6 h-6 text-blue-400 mr-3" />
           <div className="text-center">

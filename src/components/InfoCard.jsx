@@ -119,10 +119,10 @@ const InfoCard = ({ title, value, label, type }) => {
       default:
         return label;
     }
-  };
+  };9
 
   return (
-    <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 text-white">
+    <div className="bg-[#242424] rounded-2xl p-6 text-white ">
       <div className="text-gray-400 text-sm mb-2">{title}</div>
       <div className="text-4xl font-light mb-2">{value}</div>
       <div className="flex items-center">

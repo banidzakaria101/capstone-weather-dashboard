@@ -50,7 +50,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br bg-black text-white">
       <div className="flex flex-col lg:flex-row justify-center items-start min-h-screen p-6">
         {loading ? (
           <div className="flex items-center justify-center min-h-screen w-full">
@@ -72,7 +72,7 @@ function App() {
           </div>
         ) : (
           <>
-            <div className="w-full max-w-sm lg:w-1/3 p-4">
+            <div className="w-full max-w-sm lg:w-1/3 p-4 bg-stone-900 rounded-3xl mx-6">
               <SearchBar onSearch={handleSearch} />
               <WeatherCard weatherData={weatherData} />
             </div>
