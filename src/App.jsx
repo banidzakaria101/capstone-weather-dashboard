@@ -9,11 +9,11 @@ import './index.css';
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
-  const [loading, setLoading] = useState(false); // <-- start with false
+  const [loading, setLoading] = useState(false);
   const [city, setCity] = useState('Casablanca');
 
   const fetchData = async (cityName) => {
-    setLoading(true); // only indicate data is updating
+    setLoading(true);
     try {
       const { weatherData, forecastData } = await fetchWeather(cityName);
       setWeatherData(weatherData);
@@ -32,16 +32,15 @@ function App() {
 
   const handleSearch = (newCity) => {
     if (newCity.trim() !== '' && newCity !== city) {
-      setCity(newCity); // triggers data fetch
+      setCity(newCity);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-black text-white">
-      <div className="flex flex-col lg:flex-row justify-center items-start min-h-screen p-6">
-        <div className="w-full max-w-sm lg:w-1/3 p-4 bg-stone-900 rounded-3xl mx-6">
+    <div className="min-h-screen bg-gradient-to-br from-black to-gray-900 text-white p-4 sm:p-6">
+      <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start lg:min-h-screen">
+        <div className="w-full max-w-sm lg:w-1/3 p-2 sm:p-4 bg-stone-900 rounded-3xl mx-auto lg:mx-6 mb-4 lg:mb-0">
           <SearchBar onSearch={handleSearch} />
-          {/* Show old data while loading */}
           <WeatherCard weatherData={weatherData} loading={loading} />
         </div>
 
