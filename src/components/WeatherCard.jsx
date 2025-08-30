@@ -1,3 +1,4 @@
+// WeatherCard.jsx
 import React from 'react';
 import { Droplets, Wind } from 'lucide-react';
 
@@ -20,7 +21,6 @@ const WeatherCard = ({ weatherData }) => {
     return days[date.getDay()];
   };
 
-  // API weather icon
   const getWeatherIcon = () => {
     return (
       <div className="flex justify-center items-center">
@@ -49,7 +49,11 @@ const WeatherCard = ({ weatherData }) => {
 
       {/* Location and Day */}
       <div className="flex justify-between items-center mb-4 sm:mb-8 px-2">
-        <div className="text-base sm:text-lg font-medium">{location.name}</div>
+        {/* City and Country display */}
+        <div className="flex flex-col text-left"> {/* Corrected: Use flex-col for stacking */}
+          <div className="text-base sm:text-lg font-medium">{location.name}</div>
+          <div className="text-sm sm:text-base text-gray-400">{location.country}</div> {/* Corrected: Added city country */}
+        </div>
         <div className="text-gray-400 text-base sm:text-lg">{getDayOfWeek()}</div>
       </div>
 
