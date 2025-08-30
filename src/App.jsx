@@ -26,13 +26,13 @@ function App() {
     }
   };
 
-  // ✅ Detect user location on first load
+  // ✅ Detect user location on first load AND fetch data when city changes
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (city === 'Casablanca' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          await fetchData(`${latitude},${longitude}`);
+          fetchData(`${latitude},${longitude}`);
         },
         (error) => {
           console.warn("Geolocation failed:", error.message);
@@ -40,10 +40,10 @@ function App() {
         }
       );
     } else {
-      fetchData(city); // fallback if not supported
+      fetchData(city);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [city]); // CRITICAL FIX: Add 'city' to the dependency array
 
   const handleSearch = (newCity) => {
     if (newCity.trim() !== '' && newCity !== city) {
